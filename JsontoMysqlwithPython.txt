@@ -1,0 +1,72 @@
+#!/usr/bin/python
+#--coding: utf-8 --
+import pymysql
+import json
+
+db = pymysql.connect(host='localhost',user='root',password='P@ssw0rd;',db='India_Company',charset='utf8',use_unicode=True)
+cursor = db.cursor()
+traffic = open('json_file.json')
+data = json.load(traffic)
+#print (data['Employee'])
+sql = """insert into employee(name,dept,id,manager,City) values (%s,%s,%s,%s,%s)"""  
+
+try:
+    for row in data:
+        cursor.execute(sql, data)
+        #Commit your changes in the database
+        db.commit()
+        print('Success')
+except:
+    #Rollback in case there is any error
+    db.rollback()
+    print('Error')
+#disconnect from server
+db.close()
+
+#--------------------------Json Data(json_file.json)-----------------------
+{
+  "Employee":[
+    {
+      "name":     "Kamal",
+      "dept":     "QA Center of Excellence",
+      "id":       "1",
+      "manager":  "Mr. Max",
+      "City":     "New Delhi"
+    },
+    {
+      "name":     "Akshay",
+      "dept":     "QA Center of Excellence",
+      "id":       "2",
+      "manager":  "Kamal",
+      "City":     "Bangalore"
+    },
+    {
+      "name":     "Susan",
+      "dept":     "QA Center of Excellence",
+      "id":       "3",
+      "manager":  "Kamal",
+      "City":     "New Delhi"
+    },
+    {
+      "name":     "Ambika",
+      "dept":     "Develops",
+      "id":       "4",
+      "manager":  "Mr. Mark",
+      "City":     "Goa"
+    },
+    {
+      "name":     "Mabolo",
+      "dept":     "Risk Management",
+      "id":       "5",
+      "manager":  "Mr. Roon",
+      "City":     "Arzerbijan"
+    },
+    {
+      "name":     "Simmon",
+      "dept":     "Risk Management",
+      "id":       "6",
+      "manager":  "Mr. Max",
+      "City":     "London"
+    }
+  ]
+}
