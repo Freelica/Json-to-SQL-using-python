@@ -8,11 +8,12 @@ cursor = db.cursor()
 traffic = open('json_file.json')
 data = json.load(traffic)
 #print (data['Employee'])
-sql = """insert into employee(name,dept,id,manager,City) values (%s,%s,%s,%s,%s)"""  
+
 
 try:
-    for row in data:
-        cursor.execute(sql, data)
+    for data in row:
+        sql = """insert into employee(id,name,dept,manager,City) values(row['id'],row['name'],row['dept'],row['manager'],row['City']) """ 
+        cursor.execute(sql)
         #Commit your changes in the database
         db.commit()
         print('Success')
@@ -22,6 +23,14 @@ except:
     print('Error')
 #disconnect from server
 db.close()
+
+#-------------------------SQL SETTING------------#
+SQL
+id(int1o)
+name(varchar100)
+dept(varchar100)
+manager(varchar100)
+city(varchar100)
 
 #--------------------------Json Data(json_file.json)-----------------------
 {
@@ -70,3 +79,4 @@ db.close()
     }
   ]
 }
+
