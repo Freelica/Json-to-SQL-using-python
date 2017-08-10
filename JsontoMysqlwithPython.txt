@@ -5,25 +5,27 @@ import json
 
 db = pymysql.connect(host='localhost',user='root',password='P@ssw0rd;',db='India_Company',charset='utf8',use_unicode=True)
 cursor = db.cursor()
-traffic = open('json_file.json')
-data = json.load(traffic)
-#print (data['Employee'])
-
+with open('json_file.json') as json_data:
+    data = json.load(json_data)
 
 try:
-    for data in row:
-        sql = """insert into employee(id,name,dept,manager,City) values(row['id'],row['name'],row['dept'],row['manager'],row['City']) """ 
-        cursor.execute(sql)
+    for r in data['Employee']:
+        ID = r['id']
+        NAME = r['name']
+        DEPT = r['dept']
+        MANAGER = r['manager']
+        CITY = r['City']
+        
+        cursor.execute("insert into employee(id,name,dept,manager,City) values (%s,%s,%s,%s,%s)",(ID,NAME,DEPT,MANAGER,CITY)
         #Commit your changes in the database
         db.commit()
-        print('Success')
+    print('Success')
 except:
     #Rollback in case there is any error
     db.rollback()
     print('Error')
 #disconnect from server
 db.close()
-
 #-------------------------SQL SETTING------------#
 SQL
 id(int1o)
